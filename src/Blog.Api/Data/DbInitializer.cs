@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Blog.Api.Shared.Constants;
+
+using Microsoft.AspNetCore.Identity;
 
 namespace Blog.Api.Data;
 
@@ -8,7 +10,11 @@ public class DbInitializer
     {
         var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
         
-        var roleNames = Enum.GetNames<Roles>();
+        string[] roleNames = [
+            AppRoles.Admin, 
+            AppRoles.Editor, 
+            AppRoles.Reader
+        ];
 
         foreach (var roleName in roleNames)
         {

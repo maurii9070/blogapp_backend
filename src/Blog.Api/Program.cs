@@ -1,5 +1,9 @@
 using Blog.Api.Data;
 using Blog.Api.Entities;
+using Blog.Api.Extensions;
+using Blog.Api.Features.Users;
+
+using FluentValidation;
 
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +24,8 @@ builder.Services.AddDbContext<BlogDbContext>(options =>
 builder.Services
        .AddIdentityCore<ApplicationUser>(options =>
        {
+           options.Password.RequireLowercase = false;
+           options.Password.RequireUppercase = false;
            options.Password.RequireDigit = false;
            options.Password.RequiredLength = 6;
            options.Password.RequireNonAlphanumeric = false;
@@ -29,6 +35,10 @@ builder.Services
        .AddEntityFrameworkStores<BlogDbContext>();
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddScoped<UserRegistration.Handler>();
 
 var app = builder.Build();
 
@@ -44,5 +54,7 @@ using (var scope = app.Services.CreateScope())
 {
     await DbInitializer.SeedRoles(scope.ServiceProvider);
 }
+
+app.MapUserEndpoints();
 
 app.Run();
