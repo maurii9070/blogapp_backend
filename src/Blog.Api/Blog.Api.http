@@ -1,6 +1,15 @@
-@Blog.Api_HostAddress = http://localhost:5238
+@Api_HostAddress = http://localhost:5238/api
 
-GET {{Blog.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+##
+
+POST {{Api_HostAddress}}/users/register
+Content-Type: application/json
+
+{
+    "fullName": "John Doe",
+    "email": "juan@gmail.com",
+    "password": "123123",
+    "passwordConfirmation": "123123"
+}
 
 ###
