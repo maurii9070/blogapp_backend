@@ -1,6 +1,8 @@
 ﻿using Blog.Api.Data;
 using Blog.Api.Entities;
+using Blog.Api.Extensions;
 using Blog.Api.Shared;
+using Blog.Api.Shared.Constants;
 
 using FluentValidation;
 
@@ -48,20 +50,18 @@ public class UserRegistration
 
             var result = await _userManager.CreateAsync(user, request.Password);
 
-            if (result.Succeeded)
+            if (!result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(user, nameof(Roles.Reader));
-                return Result<string>.Success("User registered successfully.");
+                return Result<string>.ValidationFailure(result.ToErrorDictionary());
+            }
+            var addToRoleResult = await _userManager.AddToRoleAsync(user, AppRoles.Reader);
+            
+            if(!addToRoleResult.Succeeded)
+            {
+                return Result<string>.ValidationFailure(addToRoleResult.ToErrorDictionary());
             }
 
-            var errors = result.Errors
-                               .GroupBy(e => e.Code)
-                               .ToDictionary(
-                                   g => g.Key,
-                                   g => g.Select(e => e.Description).ToArray()
-                               );
-
-            return Result<string>.ValidationFailure(errors);
+            return Result<string>.Success("User registered successfully.");
         }
     }
 
