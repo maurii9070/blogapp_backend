@@ -21,6 +21,26 @@ builder.Services.AddDbContext<BlogDbContext>(options =>
         .UseSnakeCaseNamingConvention();
 });
 
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+       .AddCookie(IdentityConstants.ApplicationScheme, options =>
+       {
+           options.Cookie.Name = "BlogAuthCookie";
+           options.ExpireTimeSpan = TimeSpan.FromDays(7);
+           options.SlidingExpiration = true;
+           options.Cookie.HttpOnly = true;
+
+           options.Events.OnRedirectToLogin = context =>
+           {
+               context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+               return Task.CompletedTask;
+           };
+           options.Events.OnRedirectToAccessDenied = context =>
+           {
+               context.Response.StatusCode = StatusCodes.Status403Forbidden;
+               return Task.CompletedTask;
+           };
+       });
+
 builder.Services
        .AddIdentityCore<ApplicationUser>(options =>
        {
@@ -32,13 +52,16 @@ builder.Services
            options.User.RequireUniqueEmail = true;
        })
        .AddRoles<IdentityRole>()
-       .AddEntityFrameworkStores<BlogDbContext>();
+       .AddEntityFrameworkStores<BlogDbContext>()
+       .AddSignInManager<SignInManager<ApplicationUser>>()
+       .AddDefaultTokenProviders();
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddScoped<UserRegistration.Handler>();
+builder.Services.AddScoped<UserLogin.Handler>();
 
 var app = builder.Build();
 
@@ -49,6 +72,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 using (var scope = app.Services.CreateScope())
 {

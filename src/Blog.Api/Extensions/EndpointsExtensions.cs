@@ -7,5 +7,6 @@ public static class EndpointsExtensions
     public static void MapUserEndpoints(this IEndpointRouteBuilder app)
     {
         UserRegistration.MapEndpoint(app);
+        UserLogin.MapEndpoint(app);
     }
 }

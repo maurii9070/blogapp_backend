@@ -13,3 +13,12 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{Api_HostAddress}}/users/login
+Content-Type: application/json
+
+{
+    "email": "juan@gmail.com",
+    "password": "123123",
+    "rememberMe": false
+}
