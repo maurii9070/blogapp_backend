@@ -22,3 +22,8 @@ Content-Type: application/json
     "password": "123123",
     "rememberMe": false
 }
+
+###
+
+POST {{Api_HostAddress}}/users/logout
+
