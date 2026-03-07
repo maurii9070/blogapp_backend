@@ -62,6 +62,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddScoped<UserRegistration.Handler>();
 builder.Services.AddScoped<UserLogin.Handler>();
+builder.Services.AddScoped<UserLogout.Handler>();
 
 var app = builder.Build();
 

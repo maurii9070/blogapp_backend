@@ -8,5 +8,6 @@ public static class EndpointsExtensions
     {
         UserRegistration.MapEndpoint(app);
         UserLogin.MapEndpoint(app);
+        UserLogout.MapEndpoint(app);
     }
 }
