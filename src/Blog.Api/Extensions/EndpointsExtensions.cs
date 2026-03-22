@@ -15,5 +15,6 @@ public static class EndpointsExtensions
     public static void MapPostEndpoints(this IEndpointRouteBuilder app)
     {
         CreatePost.MapEndpoint(app);
+        PublishPost.MapEndpoint(app);
     }
 }
