@@ -27,3 +27,15 @@ Content-Type: application/json
 
 POST {{Api_HostAddress}}/users/logout
 
+###
+
+POST {{Api_HostAddress}}/posts
+Content-Type: application/json
+
+{
+    "title": "My First Post 2",
+    "content": "This is the content of my first post.",
+    "categoryId": 1,
+    "tagNames": ["Nodejs", "Express", "MongoDB", "Backend"]
+}
+

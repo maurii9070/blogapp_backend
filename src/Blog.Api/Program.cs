@@ -1,7 +1,10 @@
 using Blog.Api.Data;
 using Blog.Api.Entities;
 using Blog.Api.Extensions;
+using Blog.Api.Features.Posts;
 using Blog.Api.Features.Users;
+using Blog.Api.Shared.Constants;
+using Blog.Api.Shared.Services;
 
 using FluentValidation;
 
@@ -56,13 +59,20 @@ builder.Services
        .AddSignInManager<SignInManager<ApplicationUser>>()
        .AddDefaultTokenProviders();
 
-builder.Services.AddAuthorization();
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("RequireEditorRole", policy => policy.RequireRole(AppRoles.Editor, AppRoles.Admin))
+    .AddPolicy("RequireAdminRole", policy => policy.RequireRole(AppRoles.Admin));
 
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
+// User DI
 builder.Services.AddScoped<UserRegistration.Handler>();
 builder.Services.AddScoped<UserLogin.Handler>();
 builder.Services.AddScoped<UserLogout.Handler>();
+
+// Post DI
+builder.Services.AddScoped<ISlugService, SlugService>();
+builder.Services.AddScoped<CreatePost.Handler>();
 
 var app = builder.Build();
 
@@ -82,6 +92,8 @@ using (var scope = app.Services.CreateScope())
     await DbInitializer.SeedRoles(scope.ServiceProvider);
 }
 
+// Endpoints
 app.MapUserEndpoints();
+app.MapPostEndpoints();
 
 app.Run();

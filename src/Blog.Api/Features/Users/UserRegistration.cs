@@ -1,5 +1,4 @@
-﻿using Blog.Api.Data;
-using Blog.Api.Entities;
+﻿using Blog.Api.Entities;
 using Blog.Api.Extensions;
 using Blog.Api.Shared;
 using Blog.Api.Shared.Constants;
@@ -55,8 +54,8 @@ public class UserRegistration
                 return Result<string>.ValidationFailure(result.ToErrorDictionary());
             }
             var addToRoleResult = await _userManager.AddToRoleAsync(user, AppRoles.Reader);
-            
-            if(!addToRoleResult.Succeeded)
+
+            if (!addToRoleResult.Succeeded)
             {
                 return Result<string>.ValidationFailure(addToRoleResult.ToErrorDictionary());
             }

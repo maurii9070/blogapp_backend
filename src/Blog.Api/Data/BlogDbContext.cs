@@ -8,8 +8,8 @@ namespace Blog.Api.Data;
 public class BlogDbContext : IdentityDbContext<ApplicationUser>
 {
 
-    public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options){}
-    
+    public BlogDbContext(DbContextOptions<BlogDbContext> options) : base(options) { }
+
     public DbSet<Post> Posts => Set<Post>();
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<Tag> Tags => Set<Tag>();
@@ -18,7 +18,7 @@ public class BlogDbContext : IdentityDbContext<ApplicationUser>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.Entity<ApplicationUser>(eb =>
         {
             eb.Property(p => p.FullName).HasColumnType("varchar(100)");
@@ -36,7 +36,7 @@ public class BlogDbContext : IdentityDbContext<ApplicationUser>
             eb.Property(c => c.Name).HasMaxLength(50);
             eb.Property(c => c.Slug).HasMaxLength(50);
         });
-        
+
         modelBuilder.Entity<Tag>(eb =>
         {
             eb.Property(t => t.Name).HasMaxLength(50);
@@ -46,10 +46,12 @@ public class BlogDbContext : IdentityDbContext<ApplicationUser>
         modelBuilder.Entity<Comment>(eb =>
         {
             eb.Property(c => c.Content).HasColumnType("text");
-            
+
         });
-        
-        modelBuilder.Entity<Post>().HasIndex(p => p.Slug).IsUnique();
+
+        modelBuilder.Entity<Post>()
+            .HasIndex(p => new { p.AuthorId, p.Slug })
+            .IsUnique();
         modelBuilder.Entity<Category>().HasIndex(c => c.Slug).IsUnique();
         modelBuilder.Entity<Tag>().HasIndex(t => t.Slug).IsUnique();
     }
