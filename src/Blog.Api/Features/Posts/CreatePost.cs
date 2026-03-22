@@ -55,10 +55,20 @@ public class CreatePost
                 return Result<string>.Failure("User not authenticated.");
 
 
+            var slug = slugService.Generate(request.Title);
+
+            var existingPost = await dbContext.Posts
+                .FirstOrDefaultAsync(p => p.AuthorId == user.Id && p.Slug == slug);
+
+            if (existingPost != null)
+            {
+                return Result<string>.Failure("Ya existe un post con este título para este autor. Por favor, elige un título diferente.");
+            }
+
             var post = new Post
             {
                 Title = request.Title,
-                Slug = slugService.Generate(request.Title),
+                Slug = slug,
                 Content = request.Content,
                 AuthorId = user.Id,
                 CategoryId = request.CategoryId,
