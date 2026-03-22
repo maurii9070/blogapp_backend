@@ -75,6 +75,7 @@ builder.Services.AddScoped<ISlugService, SlugService>();
 builder.Services.AddScoped<CreatePost.Handler>();
 builder.Services.AddScoped<PublishPost.Handler>();
 builder.Services.AddScoped<GetPublishedPosts.Handler>();
+builder.Services.AddScoped<GetPostById.Handler>();
 
 var app = builder.Build();
 

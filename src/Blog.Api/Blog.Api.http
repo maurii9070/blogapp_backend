@@ -40,7 +40,7 @@ Content-Type: application/json
 }
 
 ### Publicar un post
-PATCH {{HostAddress}}/posts/3/publish
+PATCH {{HostAddress}}/posts/5/publish
 
 ### 1. Prueba por defecto (Debería traer la Página 1 con 10 elementos)
 GET {{HostAddress}}/posts
@@ -62,5 +62,9 @@ Accept: application/json
 ### 5. Prueba de seguridad de límites (Pidiendo demasiados elementos)
 # El backend debería limitarlo a 50 (según la regla que pusimos)
 GET {{HostAddress}}/posts?page=1&pageSize=1000
+Accept: application/json
+
+### GET POST BY ID
+GET {{HostAddress}}/posts/5
 Accept: application/json
 

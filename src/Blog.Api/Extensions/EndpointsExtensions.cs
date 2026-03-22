@@ -17,5 +17,6 @@ public static class EndpointsExtensions
         CreatePost.MapEndpoint(app);
         PublishPost.MapEndpoint(app);
         GetPublishedPosts.MapEndpoint(app);
+        GetPostById.MapEndpoint(app);
     }
 }
