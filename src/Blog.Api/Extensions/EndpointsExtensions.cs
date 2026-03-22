@@ -1,4 +1,5 @@
-﻿using Blog.Api.Features.Users;
+﻿using Blog.Api.Features.Posts;
+using Blog.Api.Features.Users;
 
 namespace Blog.Api.Extensions;
 
@@ -9,5 +10,10 @@ public static class EndpointsExtensions
         UserRegistration.MapEndpoint(app);
         UserLogin.MapEndpoint(app);
         UserLogout.MapEndpoint(app);
+    }
+
+    public static void MapPostEndpoints(this IEndpointRouteBuilder app)
+    {
+        CreatePost.MapEndpoint(app);
     }
 }
