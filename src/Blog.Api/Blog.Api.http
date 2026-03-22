@@ -1,8 +1,8 @@
-@Api_HostAddress = http://localhost:5238/api
+@HostAddress = http://localhost:5238/api
 
 ##
 
-POST {{Api_HostAddress}}/users/register
+POST {{HostAddress}}/users/register
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ###
 
-POST {{Api_HostAddress}}/users/login
+POST {{HostAddress}}/users/login
 Content-Type: application/json
 
 {
@@ -25,11 +25,11 @@ Content-Type: application/json
 
 ###
 
-POST {{Api_HostAddress}}/users/logout
+POST {{HostAddress}}/users/logout
 
 ###
 
-POST {{Api_HostAddress}}/posts
+POST {{HostAddress}}/posts
 Content-Type: application/json
 
 {
@@ -38,4 +38,29 @@ Content-Type: application/json
     "categoryId": 1,
     "tagNames": ["Nodejs", "Express", "MongoDB", "Backend"]
 }
+
+### Publicar un post
+PATCH {{HostAddress}}/posts/3/publish
+
+### 1. Prueba por defecto (Debería traer la Página 1 con 10 elementos)
+GET {{HostAddress}}/posts
+Accept: application/json
+
+### 2. Prueba pidiendo la Página 2 explícitamente
+GET {{HostAddress}}/posts?page=2
+Accept: application/json
+
+### 3. Prueba cambiando la cantidad de elementos (Página 1, pero solo 5 posts)
+GET {{HostAddress}}/posts?page=1&pageSize=5
+Accept: application/json
+
+### 4. Prueba de seguridad (Enviando una página inválida como 0 o negativa)
+# El backend debería corregirlo automáticamente y devolver la página 1
+GET {{HostAddress}}/posts?page=0&pageSize=10
+Accept: application/json
+
+### 5. Prueba de seguridad de límites (Pidiendo demasiados elementos)
+# El backend debería limitarlo a 50 (según la regla que pusimos)
+GET {{HostAddress}}/posts?page=1&pageSize=1000
+Accept: application/json
 

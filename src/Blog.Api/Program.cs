@@ -73,6 +73,7 @@ builder.Services.AddScoped<UserLogout.Handler>();
 // Post DI
 builder.Services.AddScoped<ISlugService, SlugService>();
 builder.Services.AddScoped<CreatePost.Handler>();
+builder.Services.AddScoped<PublishPost.Handler>();
 
 var app = builder.Build();
 
