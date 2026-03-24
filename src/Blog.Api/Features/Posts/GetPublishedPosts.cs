@@ -16,7 +16,6 @@ public class GetPublishedPosts
         string Title,
         DateTime PublishedAt,
         string AuthorName,
-        string AuthorShortId,
         string slug
     );
 
@@ -34,7 +33,6 @@ public class GetPublishedPosts
                     p.Title,
                     p.PublishedAt,
                     p.Author.FullName,
-                    p.AuthorId.Split("-")[0],
                     p.Slug
                 ));
 

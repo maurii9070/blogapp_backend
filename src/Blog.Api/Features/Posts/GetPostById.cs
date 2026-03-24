@@ -14,7 +14,7 @@ public class GetPostById
         string Title,
         string Content,
         string Slug,
-        string AuthorShortId,
+        string AuthorFullName,
         DateTime CreatedAt,
         DateTime? PublishedAt,
         string CategoryName,
@@ -28,23 +28,22 @@ public class GetPostById
         public async Task<Result<Response>> HandleAsync(int postId)
         {
             var post = await dbContext.Posts
-                .Include(p => p.Category)
-                .Include(p => p.Tags)
-                .FirstOrDefaultAsync(p => p.Id == postId);
+                                      .Include(p => p.Category)
+                                      .Include(p => p.Tags)
+                                      .Include(post => post.Author)
+                                      .FirstOrDefaultAsync(p => p.Id == postId);
 
             if (post is null || !post.IsPublished)
             {
                 return Result<Response>.Failure("Post not found.");
             }
 
-            var authorShortId = post.AuthorId.Split('-')[0];
-
             return Result<Response>.Success(new Response(
                 post.Id,
                 post.Title,
                 post.Content,
                 post.Slug,
-                authorShortId,
+                post.Author.FullName,
                 post.CreatedAt,
                 post.PublishedAt,
                 post.Category.Name,
