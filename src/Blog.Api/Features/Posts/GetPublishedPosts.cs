@@ -15,7 +15,8 @@ public class GetPublishedPosts
         int Id,
         string Title,
         DateTime PublishedAt,
-        string AuthorName
+        string AuthorName,
+        string slug
     );
 
     public class Handler(
@@ -31,7 +32,8 @@ public class GetPublishedPosts
                     p.Id,
                     p.Title,
                     p.PublishedAt,
-                    p.Author.FullName
+                    p.Author.FullName,
+                    p.Slug
                 ));
 
             var totalCount = await query.CountAsync();
