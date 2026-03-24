@@ -77,6 +77,22 @@ builder.Services.AddScoped<PublishPost.Handler>();
 builder.Services.AddScoped<GetPublishedPosts.Handler>();
 builder.Services.AddScoped<GetPostById.Handler>();
 
+// CORS
+var frontendUrl = builder.Configuration.GetValue<string>("CorsSettings:FrontendUrl");
+const string frontendPolicy = "FrontendPolicy";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: frontendPolicy,
+        policy =>
+        {
+            policy.WithOrigins(frontendUrl!) // URL del frontend
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -84,6 +100,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+
+app.UseCors(frontendPolicy);
 
 app.UseHttpsRedirection();
 
