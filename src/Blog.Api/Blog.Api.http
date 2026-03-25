@@ -68,3 +68,7 @@ Accept: application/json
 GET {{HostAddress}}/posts/5
 Accept: application/json
 
+### GET Profile
+GET {{HostAddress}}/users/me
+Accept: application/json
+

@@ -69,6 +69,7 @@ builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 builder.Services.AddScoped<UserRegistration.Handler>();
 builder.Services.AddScoped<UserLogin.Handler>();
 builder.Services.AddScoped<UserLogout.Handler>();
+builder.Services.AddScoped<GetUserProfile.Handler>();
 
 // Post DI
 builder.Services.AddScoped<ISlugService, SlugService>();
