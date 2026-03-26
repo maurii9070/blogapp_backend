@@ -80,3 +80,7 @@ Content-Type: application/json
     "name": "Technology"
 }
 
+### Get All Categories
+GET {{HostAddress}}/categories
+Accept: application/json
+

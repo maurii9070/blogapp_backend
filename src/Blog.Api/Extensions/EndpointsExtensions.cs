@@ -25,5 +25,6 @@ public static class EndpointsExtensions
     public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
     {
         CreateCategory.MapEndpoint(app);
+        GetAllCategories.MapEndpoint(app);
     }
 }
