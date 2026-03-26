@@ -81,6 +81,7 @@ builder.Services.AddScoped<GetPostById.Handler>();
 
 // Category DI
 builder.Services.AddScoped<CreateCategory.Handler>();
+builder.Services.AddScoped<GetAllCategories.Handler>();
 
 // CORS
 var frontendUrl = builder.Configuration.GetValue<string>("CorsSettings:FrontendUrl");
@@ -121,5 +122,6 @@ using (var scope = app.Services.CreateScope())
 // Endpoints
 app.MapUserEndpoints();
 app.MapPostEndpoints();
+app.MapCategoryEndpoints();
 
 app.Run();
