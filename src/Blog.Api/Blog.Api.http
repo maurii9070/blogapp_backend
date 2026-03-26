@@ -72,3 +72,11 @@ Accept: application/json
 GET {{HostAddress}}/users/me
 Accept: application/json
 
+### Create Category
+POST {{HostAddress}}/categories
+Content-Type: application/json
+
+{
+    "name": "Technology"
+}
+

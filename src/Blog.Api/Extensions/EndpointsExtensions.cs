@@ -1,4 +1,5 @@
-﻿using Blog.Api.Features.Posts;
+﻿using Blog.Api.Features.Categories;
+using Blog.Api.Features.Posts;
 using Blog.Api.Features.Users;
 
 namespace Blog.Api.Extensions;
@@ -19,5 +20,10 @@ public static class EndpointsExtensions
         PublishPost.MapEndpoint(app);
         GetPublishedPosts.MapEndpoint(app);
         GetPostById.MapEndpoint(app);
+    }
+
+    public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
+    {
+        CreateCategory.MapEndpoint(app);
     }
 }

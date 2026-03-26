@@ -1,6 +1,7 @@
 using Blog.Api.Data;
 using Blog.Api.Entities;
 using Blog.Api.Extensions;
+using Blog.Api.Features.Categories;
 using Blog.Api.Features.Posts;
 using Blog.Api.Features.Users;
 using Blog.Api.Shared.Constants;
@@ -77,6 +78,9 @@ builder.Services.AddScoped<CreatePost.Handler>();
 builder.Services.AddScoped<PublishPost.Handler>();
 builder.Services.AddScoped<GetPublishedPosts.Handler>();
 builder.Services.AddScoped<GetPostById.Handler>();
+
+// Category DI
+builder.Services.AddScoped<CreateCategory.Handler>();
 
 // CORS
 var frontendUrl = builder.Configuration.GetValue<string>("CorsSettings:FrontendUrl");
