@@ -15,6 +15,7 @@ public class CreatePost
 {
 
     public record Request(string Title, string Content, int CategoryId, string[] TagNames);
+    public record Response(int Id, string Slug);
 
     public class RequestValidator : AbstractValidator<Request>
     {
@@ -48,11 +49,11 @@ public class CreatePost
         IHttpContextAccessor httpContextAccessor,
         ISlugService slugService)
     {
-        public async Task<Result<string>> HandleAsync(Request request)
+        public async Task<Result<Response>> HandleAsync(Request request)
         {
             var user = await userManager.GetUserAsync(httpContextAccessor.HttpContext!.User);
             if (user == null)
-                return Result<string>.Failure("User not authenticated.");
+                return Result<Response>.Failure("User not authenticated.");
 
 
             var slug = slugService.Generate(request.Title);
@@ -62,7 +63,7 @@ public class CreatePost
 
             if (existingPost != null)
             {
-                return Result<string>.Failure("Ya existe un post con este título para este autor. Por favor, elige un título diferente.");
+                return Result<Response>.Failure("Ya existe un post con este título para este autor. Por favor, elige un título diferente.");
             }
 
             var post = new Post
@@ -81,7 +82,7 @@ public class CreatePost
             dbContext.Posts.Add(post);
             await dbContext.SaveChangesAsync();
 
-            return Result<string>.Success("Post created successfully.");
+            return Result<Response>.Success(new Response(post.Id, post.Slug));
         }
 
         private async Task AddTagsToPost(Post post, string[] tagNames)
