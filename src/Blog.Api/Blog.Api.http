@@ -86,6 +86,10 @@ Accept: application/json
 GET {{HostAddress}}/users/me
 Accept: application/json
 
+### GET Posts By Author (incluye publicados y no publicados)
+GET {{HostAddress}}/users/e86c1a46-6670-47cf-a778-a0055f4f4d74/posts?page=1&pageSize=10
+Accept: application/json
+
 ### Create Category
 POST {{HostAddress}}/categories
 Content-Type: application/json
