@@ -75,6 +75,7 @@ builder.Services.AddScoped<GetUserProfile.Handler>();
 // Post DI
 builder.Services.AddScoped<ISlugService, SlugService>();
 builder.Services.AddScoped<CreatePost.Handler>();
+builder.Services.AddScoped<GetAuthorPosts.Handler>();
 builder.Services.AddScoped<UpdatePost.Handler>();
 builder.Services.AddScoped<DeletePost.Handler>();
 builder.Services.AddScoped<PublishPost.Handler>();
