@@ -17,6 +17,8 @@ public static class EndpointsExtensions
     public static void MapPostEndpoints(this IEndpointRouteBuilder app)
     {
         CreatePost.MapEndpoint(app);
+        UpdatePost.MapEndpoint(app);
+        DeletePost.MapEndpoint(app);
         PublishPost.MapEndpoint(app);
         GetPublishedPosts.MapEndpoint(app);
         GetPostById.MapEndpoint(app);

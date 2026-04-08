@@ -33,7 +33,7 @@ POST {{HostAddress}}/posts
 Content-Type: application/json
 
 {
-    "title": "My First Post 2",
+    "title": "My First Post 5",
     "content": "This is the content of my first post.",
     "categoryId": 1,
     "tagNames": ["Nodejs", "Express", "MongoDB", "Backend"]
@@ -41,6 +41,20 @@ Content-Type: application/json
 
 ### Publicar un post
 PATCH {{HostAddress}}/posts/1/publish
+
+### Update Post
+PUT {{HostAddress}}/posts/1
+Content-Type: application/json
+
+{
+    "title": "My First Post 2 - Updated pt2",
+    "content": "This is the updated content of my first post.",
+    "categoryId": 1,
+    "tagNames": ["Nodejs", "Dotnet", "PostgreSQL", "Backend"]
+}
+
+### Delete Post
+DELETE {{HostAddress}}/posts/5
 
 ### 1. Prueba por defecto (Debería traer la Página 1 con 10 elementos)
 GET {{HostAddress}}/posts
