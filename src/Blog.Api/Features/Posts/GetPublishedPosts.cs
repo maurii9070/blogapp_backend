@@ -9,7 +9,7 @@ namespace Blog.Api.Features.Posts;
 
 public class GetPublishedPosts
 {
-    public record Request(int Page = 1, int PageSize = 10);
+    public record Request(string? Q = null, int? CategoryId = null, string[]? Tags = null, int Page = 1, int PageSize = 10);
 
     public record Response(
         int Id,
@@ -27,6 +27,33 @@ public class GetPublishedPosts
         {
             var query = dbContext.Posts
                 .Where(p => p.IsPublished)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(request.Q))
+            {
+                var pattern = $"%{request.Q.Trim()}%";
+                query = query.Where(p =>
+                    EF.Functions.ILike(p.Title, pattern) ||
+                    EF.Functions.ILike(p.Content, pattern));
+            }
+
+            if (request.CategoryId.HasValue)
+            {
+                query = query.Where(p => p.CategoryId == request.CategoryId.Value);
+            }
+
+            var normalizedTags = request.Tags?
+                .Where(tag => !string.IsNullOrWhiteSpace(tag))
+                .Select(tag => tag.Trim().ToLower())
+                .Distinct()
+                .ToArray();
+
+            if (normalizedTags is { Length: > 0 })
+            {
+                query = query.Where(p => p.Tags.Any(tag => normalizedTags.Contains(tag.Name)));
+            }
+
+            var projectedQuery = query
                 .OrderByDescending(p => p.PublishedAt)
                 .Select(p => new Response(
                     p.Id,
@@ -36,9 +63,9 @@ public class GetPublishedPosts
                     p.Slug
                 ));
 
-            var totalCount = await query.CountAsync();
+            var totalCount = await projectedQuery.CountAsync();
 
-            var posts = await query
+            var posts = await projectedQuery
                 .Skip((request.Page - 1) * request.PageSize)
                 .Take(request.PageSize)
                 .ToListAsync();

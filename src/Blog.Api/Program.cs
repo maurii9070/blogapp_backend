@@ -71,6 +71,8 @@ builder.Services.AddScoped<UserRegistration.Handler>();
 builder.Services.AddScoped<UserLogin.Handler>();
 builder.Services.AddScoped<UserLogout.Handler>();
 builder.Services.AddScoped<GetUserProfile.Handler>();
+builder.Services.AddScoped<UpdateUserProfile.Handler>();
+builder.Services.AddScoped<GetPublicUserProfile.Handler>();
 
 // Post DI
 builder.Services.AddScoped<ISlugService, SlugService>();
@@ -81,6 +83,10 @@ builder.Services.AddScoped<DeletePost.Handler>();
 builder.Services.AddScoped<PublishPost.Handler>();
 builder.Services.AddScoped<GetPublishedPosts.Handler>();
 builder.Services.AddScoped<GetPostById.Handler>();
+builder.Services.AddScoped<CreateComment.Handler>();
+builder.Services.AddScoped<GetPostComments.Handler>();
+builder.Services.AddScoped<UpdateComment.Handler>();
+builder.Services.AddScoped<DeleteComment.Handler>();
 
 // Category DI
 builder.Services.AddScoped<CreateCategory.Handler>();
