@@ -55,6 +55,12 @@ public class CreatePost
             if (user == null)
                 return Result<Response>.Failure("User not authenticated.");
 
+            var categoryExists = await dbContext.Categories.AnyAsync(c => c.Id == request.CategoryId);
+            if (!categoryExists)
+            {
+                return Result<Response>.Failure("Category not found.");
+            }
+
 
             var slug = slugService.Generate(request.Title);
 

@@ -26,7 +26,7 @@ public class GetAllCategories
         {
             var categories = await handler.HandleAsync();
             return Results.Ok(categories);
-        }).RequireAuthorization("RequireEditorRole");
+        });
     }
 
 }

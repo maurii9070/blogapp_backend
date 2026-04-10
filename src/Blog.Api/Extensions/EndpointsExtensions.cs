@@ -12,6 +12,8 @@ public static class EndpointsExtensions
         UserLogin.MapEndpoint(app);
         UserLogout.MapEndpoint(app);
         GetUserProfile.MapEndpoint(app);
+        UpdateUserProfile.MapEndpoint(app);
+        GetPublicUserProfile.MapEndpoint(app);
     }
 
     public static void MapPostEndpoints(this IEndpointRouteBuilder app)
@@ -23,6 +25,8 @@ public static class EndpointsExtensions
         PublishPost.MapEndpoint(app);
         GetPublishedPosts.MapEndpoint(app);
         GetPostById.MapEndpoint(app);
+        CreateComment.MapEndpoint(app);
+        GetPostComments.MapEndpoint(app);
     }
 
     public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)
