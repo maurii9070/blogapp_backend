@@ -27,6 +27,8 @@ public static class EndpointsExtensions
         GetPostById.MapEndpoint(app);
         CreateComment.MapEndpoint(app);
         GetPostComments.MapEndpoint(app);
+        UpdateComment.MapEndpoint(app);
+        DeleteComment.MapEndpoint(app);
     }
 
     public static void MapCategoryEndpoints(this IEndpointRouteBuilder app)

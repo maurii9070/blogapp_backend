@@ -85,6 +85,8 @@ builder.Services.AddScoped<GetPublishedPosts.Handler>();
 builder.Services.AddScoped<GetPostById.Handler>();
 builder.Services.AddScoped<CreateComment.Handler>();
 builder.Services.AddScoped<GetPostComments.Handler>();
+builder.Services.AddScoped<UpdateComment.Handler>();
+builder.Services.AddScoped<DeleteComment.Handler>();
 
 // Category DI
 builder.Services.AddScoped<CreateCategory.Handler>();
